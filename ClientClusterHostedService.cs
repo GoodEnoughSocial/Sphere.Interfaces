@@ -67,7 +67,10 @@ public sealed class ClusterClientHostedService : IHostedService, IAsyncDisposabl
             }
         });
 
-        var discovery = Client.GetGrain<IServiceDiscovery>(Services.Accounts);
+        // Technically only kind of needed during debug when starting Server up at the same time...
+        await Task.Delay(TimeSpan.FromSeconds(5.0), cancellationToken);
+
+        var discovery = Client.GetGrain<IServiceDiscovery>(Services.Current);
         var sd = await discovery.GetServiceDefinition();
 
         _registration = sd.GetServiceRegistration();

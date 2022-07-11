@@ -1,13 +1,10 @@
 ﻿using Orleans;
+using Sphere.Shared.Models;
 
 namespace Sphere.Interfaces;
 
 public interface IUserProfile : IGrainWithIntegerKey
 {
-    public Description Description { get; set; }
-    public string AvatarMediaUrl { get; set; }
-    public string HeaderMediaUrl { get; set; }
+    Task<UserProfileState> GetProfile();
+    Task<UserProfileState> Update(UserProfileState updatedProfile);
 }
-
-[Serializable]
-public record Description(string Bio, string Website, string Location);
